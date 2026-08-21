@@ -27,7 +27,7 @@ with (
             break
         shortName = codes_get(field_id, "shortName")
         if not 'u' in locals():
-            if shortName == "10u" or shortName == "u" or shortName == "avg10u":
+            if shortName == "10u" or shortName == "avg10u":
                 nx = codes_get(field_id, "Ni")
                 ny = codes_get(field_id, "Nj")
                 grid_boxes = codes_get(field_id, "numberOfPoints")
@@ -35,7 +35,7 @@ with (
                 lat = codes_get_array(field_id, "latitudes").reshape(ny, nx)
                 u = codes_get_values(field_id)
         if not 'v' in locals():
-            if shortName == "10v" or shortName == "v" or shortName == "avg10v":
+            if shortName == "10v" or shortName == "avg10v":
                 v = codes_get_values(field_id)
         # The code only reads the first available set of u and v!
         if 'u' in locals() and 'v' in locals():
