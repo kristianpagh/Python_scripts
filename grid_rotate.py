@@ -43,16 +43,35 @@ with (
 
     wdir=[0]*grid_boxes
     for jy in range(0,ny):
-        for jx in range(0,nx-1):
+        # Column computation for jx=0:
+        j=jy*nx
+        # Compute the apparent wind direction relative to the grid:
+        wdir[j] = 180.0/math.pi*math.atan2(u[j],v[j])+180.0
+        dlong=long[jy,1]-long[jy,0]
+        if dlong <= -180.0:
+            dlong=dlong+360.0
+        if dlong > 180.0:
+            dlong=dlong-360.0
+        dlat=lat[jy,1]-lat[jy,0]
+        # The grid rotation is positive in the clockwise direction:
+        rotation=-math.atan2(dlat,dlong)/math.pi*180.0
+        # Correct for the grid rotation:
+        wdir[j]=wdir[j]-rotation
+        if wdir[j] < 0.0:
+            wdir[j]=wdir[j]+360.0
+        if wdir[j] > 360.0:
+            wdir[j]=wdir[j]-360.0
+        # Column computations for interior grid boxes, that is jx=[1-nx-2]:
+        for jx in range(1,nx-1):
             j=jy*nx+jx
             # Compute the apparent wind direction relative to the grid:
             wdir[j] = 180.0/math.pi*math.atan2(u[j],v[j])+180.0
-            dlong=long[jy,jx+1]-long[jy,jx]
+            dlong=long[jy,jx+1]-long[jy,jx-1]
             if dlong <= -180.0:
                 dlong=dlong+360.0
             if dlong > 180.0:
                 dlong=dlong-360.0
-            dlat=lat[jy,jx+1]-lat[jy,jx]
+            dlat=lat[jy,jx+1]-lat[jy,jx-1]
             if 'rotation' in locals():
                 protation=rotation
             # The grid rotation is positive in the clockwise direction:
