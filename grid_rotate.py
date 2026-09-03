@@ -65,11 +65,8 @@ with (
                 wdir[j]=wdir[j]-360.0
         # Extrapolate the grid rotation for jx=nx:
         j=jy*nx+nx-1
+        wdir[j] = 180.0/math.pi*math.atan2(u[j],v[j])+180.0
         tmprotation=rotation+rotation-protation
-        if tmprotation <= -180.0:
-            tmprotation=tmprotation+360.0
-        if tmprotation > 180.0:
-            tmprotation=tmprotation-360.0
         # Correct for the grid rotation of jx=nx:
         wdir[j]=wdir[j]-tmprotation 
         if wdir[j] < 0.0:
