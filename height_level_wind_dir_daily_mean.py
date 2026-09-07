@@ -46,7 +46,7 @@ levels = sorted(levels)
 
 u = np.zeros((len(levels), grid_boxes))
 v = np.zeros((len(levels), grid_boxes))
-avg_wdir = np.zeros((len(levels), grid_boxes))
+avg_wdir = np.zeros(grid_boxes))
 count_check=0
 with (
       open(infile, "rb") as f_in, 
@@ -74,8 +74,8 @@ with (
             v[idx,:] = v[idx,:] - np.cos(wdir[:]/180.0*np.pi)
         if (count_check == len(hours)*len(levels)):
             for l in range(0,len(levels)):
-                avg_wdir[l,:] = 180.0/np.pi*np.arctan2(u[l,:],v[l,:])+180.0
-                codes_set_values(field_id, avg_wdir[l,:])
+                avg_wdir = 180.0/np.pi*np.arctan2(u[l,:],v[l,:])+180.0
+                codes_set_values(field_id, avg_wdir)
                 codes_set(field_id, "level", levels[l])
                 codes_write(field_id, f_out)
         codes_release(field_id)
